@@ -11,7 +11,7 @@ defmodule AdventOfCode.Solution.Year2023.Day01Test do
       a1b2c3d4e5f
       treb7uchet
       """,
-      input2: """
+      input_2: """
       two1nine
       eightwothree
       abcone2threexyz
@@ -29,7 +29,7 @@ defmodule AdventOfCode.Solution.Year2023.Day01Test do
     assert result == 142
   end
 
-  test "part2", %{input2: input} do
+  test "part2", %{input_2: input} do
     result = part2(input)
 
     assert result == 281

@@ -1,6 +1,6 @@
 defmodule AdventOfCode.Solution.Year2024.Day03 do
   def part1(input) do
-    ~r/mul\((\d+),(\d+)\)/ 
+    ~r/mul\((\d+),(\d+)\)/
     |> Regex.scan(input, capture: :all_but_first)
     |> Enum.map(&Enum.map(&1, fn s -> String.to_integer(s) end))
     |> Enum.map(&Enum.product/1)

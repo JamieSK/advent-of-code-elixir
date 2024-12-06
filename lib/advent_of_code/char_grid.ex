@@ -57,6 +57,15 @@ defmodule AdventOfCode.CharGrid do
     }
   end
 
+  def print(%T{} = t) do
+    t
+    |> to_list()
+    |> Enum.sort(fn {{x1, y1}, _}, {{x2, y2}, _} -> {y1, x1} <= {y2, x2} end)
+    |> Enum.map(&elem(&1, 1))
+    |> Enum.chunk_every(t.width)
+    |> Enum.each(&IO.inspect/1)
+  end
+
   @doc "Gets the value at the given coordinates."
   @spec at(t(), coordinates) :: char | nil
   def at(%T{} = t, coords) do

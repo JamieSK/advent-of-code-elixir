@@ -57,13 +57,20 @@ defmodule AdventOfCode.CharGrid do
     }
   end
 
+  @doc "attempts to pretty print the grid"
   def print(%T{} = t) do
     t
     |> to_list()
-    |> Enum.sort(fn {{x1, y1}, _}, {{x2, y2}, _} -> {y1, x1} <= {y2, x2} end)
+    |> Enum.sort(fn {{x1,y1},_}, {{x2,y2},_} -> {y1,x1} <= {y2,x2} end)
     |> Enum.map(&elem(&1, 1))
     |> Enum.chunk_every(t.width)
     |> Enum.each(&IO.inspect/1)
+  end
+
+  @doc "updates the char in a cell"
+  def update_grid(map, {{x, y}, _}) when x<0 or y<0 or x>=map.width or y>=map.height, do: map
+  def update_grid(map, {{x, y}, val}) do
+    %{map | grid: Map.put(map.grid, {x, y}, val)}
   end
 
   @doc "Gets the value at the given coordinates."

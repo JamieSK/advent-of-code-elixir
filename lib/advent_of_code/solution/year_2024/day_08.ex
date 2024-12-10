@@ -39,23 +39,25 @@ defmodule AdventOfCode.Solution.Year2024.Day08 do
       diff_y = y1 - y2
 
       Enum.reduce_while(1..1000, map, fn n, map ->
-        {x, y} = coords = {x1 + n*diff_x, y1 + n*diff_y}
+        {x, y} = coords = {x1 + n * diff_x, y1 + n * diff_y}
 
-        if x<0 or y<0 or x>=map.width or y>=map.height do
+        if x < 0 or y < 0 or x >= map.width or y >= map.height do
           {:halt, map}
         else
           {:cont, CharGrid.update_grid(map, {coords, ?#})}
         end
       end)
-      |> then(&Enum.reduce_while(1..1000, &1, fn n, map ->
-        {x, y} = coords = {x2 - n*diff_x, y2 - n*diff_y}
+      |> then(
+        &Enum.reduce_while(1..1000, &1, fn n, map ->
+          {x, y} = coords = {x2 - n * diff_x, y2 - n * diff_y}
 
-        if x<0 or y<0 or x>=map.width or y>=map.height do
-          {:halt, map}
-        else
-          {:cont, CharGrid.update_grid(map, {coords, ?#})}
-        end
-      end))
+          if x < 0 or y < 0 or x >= map.width or y >= map.height do
+            {:halt, map}
+          else
+            {:cont, CharGrid.update_grid(map, {coords, ?#})}
+          end
+        end)
+      )
       |> CharGrid.update_grid({{x1, y1}, ?#})
       |> CharGrid.update_grid({{x2, y2}, ?#})
     end)
@@ -64,7 +66,8 @@ defmodule AdventOfCode.Solution.Year2024.Day08 do
 
   defp comb(0, _), do: [[]]
   defp comb(_, []), do: []
-  defp comb(m, [h|t]) do
-    (for l <- comb(m-1, t), do: [h|l]) ++ comb(m, t)
+
+  defp comb(m, [h | t]) do
+    for(l <- comb(m - 1, t), do: [h | l]) ++ comb(m, t)
   end
 end
